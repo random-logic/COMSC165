@@ -36,6 +36,11 @@ int main()
 	getline(cin, buf);
 	temp = atof(buf.c_str());
 
+	//Display Results
+	cout << name << " is " << age << " years old now, and will be " << age + 2 
+		<< " two years from now. It's " << temp 
+		<< " degrees F in San Ramon." << endl;
+
 	return 0;
 }
 
