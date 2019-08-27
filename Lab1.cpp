@@ -17,6 +17,25 @@ int main()
 {
 	printId("Lab 1"); //Print information about ID
 
+	short int age; //Store the user's age
+	string name; //Store the user's name
+	short int temp; //Store the user's temp
+	string buf; //Use as buffer for getting inputs
+
+	//Get age input
+	cout << "Please input age: ";
+	getline(cin, buf);
+	age = atoi(buf.c_str());
+
+	//Get name input
+	cout << "Please input name: ";
+	getline(cin, name);
+
+	//Get temp input
+	cout << "Please input temperature: ";
+	getline(cin, buf);
+	temp = atof(buf.c_str());
+
 	return 0;
 }
 
