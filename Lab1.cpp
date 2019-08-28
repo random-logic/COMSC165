@@ -23,6 +23,7 @@ int main()
 	string name; //Store the user's name
 	double temp_f; //Store the user's temp in F
 	double temp_c; //Store the user's temp in C
+	string city; //Store the user's city
 	string buf; //Use as buffer for getting inputs
 
 	//Get age input
@@ -39,6 +40,10 @@ int main()
 	getline(cin, buf);
 	temp_f = atof(buf.c_str());
 
+	//Get city input
+	cout << "What city are you in right now? ";
+	getline(cin, city);
+
 	//Convert the input temp from F to C
 	temp_c = convertTempFToC(temp_f);
 
@@ -51,7 +56,7 @@ int main()
 	cout.setf(ios::fixed);
 
 	//Display Temp
-	cout << "It's " << temp_f << " degrees F in San Ramon -- that's " 
+	cout << "It's " << temp_f << " degrees F in " << city << " -- that's " 
 		<< temp_c << " degrees C." << endl;
 
 	return 0;
