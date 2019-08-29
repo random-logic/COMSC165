@@ -71,10 +71,10 @@ int main()
 * Return: Nothing
 **********************************************************************/
 void printId(string assignment) {
-	cout << "Andrew" << endl;
+	cout << "Andrew Jowe" << endl;
 	cout << assignment << endl;
-	cout << "Editor Used: Visual Studio Community" << endl;
-	cout << "Compiler Used: Visual Studio Compiler" << endl;
+	cout << "Editor Used: Visual Studio Code" << endl;
+	cout << "Compiler Used: Visual Studio Developer Command Prompt" << endl;
 	cout << "File: " << __FILE__ << endl;
 	cout << "Compiled: " << __DATE__ << endl;
 }
