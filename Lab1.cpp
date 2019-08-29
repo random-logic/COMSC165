@@ -1,7 +1,7 @@
 //Andrew
 //Lab 1, console programming basics
-//Editor Used: Visual Studio Community
-//Compiler Used: Visual Studio Compiler
+//Editor Used: Visual Studio Code
+//Compiler Used: Visual Studio Developer Command Prompt
 
 #include <iostream>
 using std::ios;
