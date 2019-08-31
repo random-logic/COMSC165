@@ -18,6 +18,17 @@ int main()
 {
     printId("Lab 2"); //Print information about ID
 
+	float amount_tendered; //Store the amount of money tendered
+	float purchase_amount; //Store the amount of money for the purchase
+	string buf; //Use as buffer for getting inputs
+
+	//Get user input
+	cout << "Input the purchase amount and amount tendered with a space seperating the two values: ";
+	cin >> buf;
+	purchase_amount = atof(buf.c_str());
+	cin >> buf;
+	amount_tendered = atof(buf.c_str());
+
     return 0;
 }
 
