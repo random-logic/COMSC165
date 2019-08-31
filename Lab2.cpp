@@ -21,6 +21,7 @@ int main()
 	float amount_tendered; //Store the amount of money tendered
 	float purchase_amount; //Store the amount of money for the purchase
 	string buf; //Use as buffer for getting inputs
+	float change_due; //Store the change due from purchase value calculated
 
 	//Get user input
 	cout << "Input the purchase amount and amount tendered with a space seperating the two values: ";
@@ -28,6 +29,9 @@ int main()
 	purchase_amount = atof(buf.c_str());
 	cin >> buf;
 	amount_tendered = atof(buf.c_str());
+
+	//Calculate the total change due
+	change_due = amount_tendered - purchase_amount;
 
     return 0;
 }
