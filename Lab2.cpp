@@ -44,6 +44,12 @@ int main()
 	//Calculate the total change due
 	change_due = amount_tendered - purchase_amount;
 
+	//Format numbers to be rounded to the nearest penny for this one statement
+	cout.precision(2);
+	cout.setf(ios::fixed);
+	cout << "The change due is $" + change_due;
+	cout.unsetf();
+
 	//Give the exact change
 	while (change_due > 99.9999) {
 		change_due -= 100;
