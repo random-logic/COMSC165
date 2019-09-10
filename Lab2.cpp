@@ -47,8 +47,9 @@ int main()
 	//Format numbers to be rounded to the nearest penny for this one statement
 	cout.precision(2);
 	cout.setf(ios::fixed);
-	cout << "The change due is $" + change_due;
-	cout.unsetf();
+	cout << "The change due is $" << change_due << endl;
+	cout.unsetf (ios::floatfield);
+	cout.unsetf(ios::fixed);
 
 	//Give the exact change
 	while (change_due > 99.9999) {
