@@ -18,21 +18,21 @@ int main()
 {
     printId("Lab 2"); //Print information about ID
 
-	float amount_tendered; //Store the amount of money tendered
-	float purchase_amount; //Store the amount of money for the purchase
+	double amount_tendered; //Store the amount of money tendered
+	double purchase_amount; //Store the amount of money for the purchase
 	string buf; //Use as buffer for getting inputs
-	float change_due; //Store the change due from purchase value calculated
+	double change_due; //Store the change due from purchase value calculated
 
-	int bills_100; //Stores the amount of each bill
-	int bills_50;
-	int bills_20;
-	int bills_10;
-	int bills_5;
-	int bills_1;
-	int coins_25;
-	int coins_10;
-	int coins_5;
-	int coins_1;
+	int bills_100 = 0; //Stores the amount of each bill
+	int bills_50 = 0;
+	int bills_20 = 0;
+	int bills_10 = 0;
+	int bills_5 = 0;
+	int bills_1 = 0;
+	int coins_25 = 0;
+	int coins_10 = 0;
+	int coins_5 = 0;
+	int coins_1 = 0;
 
 	//Get user input
 	cout << "Input the purchase amount and amount tendered with a space seperating the two values: ";
@@ -97,9 +97,9 @@ int main()
 
 	cout << "Here is the exact change the clerk should give back to the customer" << endl;
 	cout << bills_100 << " $100 bills" << endl;
-	cout << bills_50 << "$50 bills" << endl;
+	cout << bills_50 << " $50 bills" << endl;
 	cout << bills_20 << " $20 bills" << endl;
-	cout << bills_10 << "$10 bills" << endl;
+	cout << bills_10 << " $10 bills" << endl;
 	cout << bills_5 << " $5 bills" << endl;
 	cout << bills_1 << " $1 bills" << endl;
 	cout << bills_100 << " $0.25 coins" << endl;
