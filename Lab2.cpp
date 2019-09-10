@@ -102,6 +102,7 @@ int main()
 		coins_1 += 1;
 	}
 
+	//Output the results for the user
 	cout << "Here is the exact change the clerk should give back to the customer" << endl;
 	cout << bills_100 << " $100 bills" << endl;
 	cout << bills_50 << " $50 bills" << endl;
