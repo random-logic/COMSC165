@@ -36,7 +36,7 @@ int main()
 	int coins_1 = 0;
 
 	//Get user input
-	cout << "Input the purchase change_due and change_due tendered with a space seperating the two values: ";
+	cout << "Input the purchase amount and amount tendered with a space seperating the two values: ";
 	cin >> buf;
 	purchase_amount = atof(buf.c_str());
 	cin >> buf;
