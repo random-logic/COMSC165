@@ -15,6 +15,7 @@ using std::string;
 double calculateChange(double purchased, double tendered);
 void getExactChange(double amount);
 void printId(string assignment);
+double getBillsToReturn(double amount, string billType, double billTypeValue, double threshold);
 
 int main() 
 {
@@ -67,88 +68,41 @@ double calculateChange(double purchased, double tendered) {
 *
 * Return: Nothing
 **********************************************************************/
-void getExactChange(double amount) {
-    int bills_100 = 0; //Stores the amount of each bill
-	int bills_50 = 0;
-	int bills_20 = 0;
-	int bills_10 = 0;
-	int bills_5 = 0;
-	int bills_1 = 0;
-    int coins_50 = 0;
-	int coins_25 = 0;
-	int coins_10 = 0;
-	int coins_5 = 0;
-	int coins_1 = 0;
-
-    //Give the exact change
-	while (amount > 99.999999999) {
-		amount -= 100;
-		bills_100 += 1;
-	}
-
-	while (amount > 49.999999999) {
-		amount -= 50;
-		bills_50 += 1;
-	}
-
-	while (amount > 19.999999999) {
-		amount -= 20;
-		bills_20 += 1;
-	}
-
-	while (amount > 9.999999999) {
-		amount -= 10;
-		bills_10 += 1;
-	}
-
-	while (amount > 4.999999999) {
-		amount -= 5;
-		bills_5 += 1;
-	}
-
-	while (amount > 0.999999999) {
-		amount -= 1;
-		bills_1 += 1;
-	}
-
-    while (amount > 0.499999999) {
-		amount -= 0.50;
-		coins_50 += 1;
-	}
-
-	while (amount > 0.249999999) {
-		amount -= 0.25;
-		coins_25 += 1;
-	}
-
-	while (amount > 0.099999999) {
-		amount -= 0.10;
-		coins_10 += 1;
-	}
-
-	while (amount > 0.049999999) {
-		amount -= 0.5;
-		coins_5 += 1;
-	}
-
-	while (amount > 0.009999999) {
-		amount -= 0.01;
-		coins_1 += 1;
-	}
-
-	//Output the results for the user
+void getExactChange(double amount) {    
 	cout << "Here is the exact change the clerk should give back to the customer" << endl;
-	cout << bills_100 << " $100 bills" << endl;
-	cout << bills_50 << " $50 bills" << endl;
-	cout << bills_20 << " $20 bills" << endl;
-	cout << bills_10 << " $10 bills" << endl;
-	cout << bills_5 << " $5 bills" << endl;
-	cout << bills_1 << " $1 bills" << endl;
-    cout << coins_50 << " $0.50 coins" << endl;
-	cout << coins_25 << " $0.25 coins" << endl;
-	cout << coins_10 << " $0.10 coins" << endl;
-	cout << coins_5 << " $0.05 coins" << endl;
-	cout << coins_1 << " $0.01 coins" << endl;
+	amount = getBillsToReturn(amount, "$100 bills", 100, 99.999999999);
+	amount = getBillsToReturn(amount, "$50 bills", 50, 49.999999999);
+	amount = getBillsToReturn(amount, "$20 bills", 20, 19.999999999);
+	amount = getBillsToReturn(amount, "$10 bills", 10, 9.999999999);
+	amount = getBillsToReturn(amount, "$5 bills", 5, 4.999999999);
+	amount = getBillsToReturn(amount, "$1 bills", 1, 0.999999999);
+	amount = getBillsToReturn(amount, "$0.50 coins", 0.50, 0.499999999);
+	amount = getBillsToReturn(amount, "$0.25 coins", 0.25, 0.249999999);
+	amount = getBillsToReturn(amount, "$0.10 coins", 0.10, 0.099999999);
+	amount = getBillsToReturn(amount, "$0.05 coins", 0.05, 0.049999999);
+	amount = getBillsToReturn(amount, "$0.01 coins", 0.01, 0.009999999);
+}
+
+/**********************************************************************
+* Purpose: To calculate and output the amount of specific bills (or coins) to give back for a specific amount of money
+* Parameters: double amount - the amount of money the clerk has to give back to the customer
+*             string billType - the type of bill (or coin) needed to give
+*             double billTypeValue - the value of the bill (or coin) needed to give
+*             double threshold - while the amount of money is greater than this value, more bills (or coins) is given
+* Return: double - the amount of money remaining that has not been given back in billType bills (or coins)
+**********************************************************************/
+double getBillsToReturn(double amount, string billType, double billTypeValue, double threshold) {
+	//Give the exact change
+	int bills_to_give_back = 0; //Stores the amount of bills (or coins) given back
+	while (amount > threshold) {
+		amount -= billTypeValue;
+		bills_to_give_back += 1;
+	}
+	
+	//Output the results for the user
+	cout << bills_to_give_back << " " << billType << endl;
+
+	return amount;
 }
 
 /**********************************************************************
