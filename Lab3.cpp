@@ -1,5 +1,5 @@
 //Andrew
-//Lab 3, 
+//Lab 3, Student Objects With Serializing Down
 //Editor Used: Visual Studio Code
 //Compiler Used: Visual Studio Developer Command Prompt
 
