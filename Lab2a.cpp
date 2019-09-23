@@ -92,16 +92,18 @@ void getExactChange(double amount) {
 * Return: double - the amount of money remaining that has not been given back in billType bills (or coins)
 **********************************************************************/
 double getBillsToReturn(double amount, string billType, double billTypeValue, double threshold) {
-	//Give the exact change
 	int bills_to_give_back = 0; //Stores the amount of bills (or coins) given back
+
+	//Give the exact change while there is enough amount present
 	while (amount > threshold) {
 		amount -= billTypeValue;
 		bills_to_give_back += 1;
 	}
 	
-	//Output the results for the user
-	cout << bills_to_give_back << " " << billType << endl;
-
+	//Output the results for the user if there is any bills or coins to return
+	if (bills_to_give_back != 0) {
+		cout << bills_to_give_back << " " << billType << endl;
+	}
 	return amount;
 }
 
