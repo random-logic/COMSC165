@@ -48,9 +48,11 @@ int main() {
             else {
                 //Restore Course object
                 courses[index].name = buf;
-                fin >> courses[index].year;
-                fin >> courses[index].units;
-                fin >> courses[index].grade;
+                getline(fin, buf);
+                courses[index].year = atoi(buf.c_str());
+                getline(fin, buf);
+                courses[index].units = atoi(buf.c_str());
+                getline(fin, courses[index].grade);
                 index++;
             }
         }
@@ -96,11 +98,6 @@ int main() {
         fout << courses[i].year << endl;
         fout << courses[i].units << endl;
         fout << courses[i].grade << endl;
-
-        cout << courses[i].name << endl;
-        cout << courses[i].year << endl;
-        cout << courses[i].units << endl;
-        cout << courses[i].grade << endl;
     }
 
     fout << "EOF" << endl;
