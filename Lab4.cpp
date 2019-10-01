@@ -22,14 +22,14 @@ struct Course {
     string name;
     int year;
     int units;
-    /*char*/ string grade;
+    string grade;
 };
 
 int main() {
     printId("Lab 4"); ////Print information about ID
 
     const int SIZE = 100;
-    Course courses[SIZE];
+    struct Course courses[SIZE];
 
     int index = 0; //The first unused index of the courses 
 
@@ -81,7 +81,7 @@ int main() {
 
         cout << "What is your grade in " << courses[index].name << "? ";
         getline(cin, buf);
-        courses[index].grade = buf/*.at(0)*/; //Get the first character of the buffer
+        courses[index].grade = buf;
 
         index++;
     }
@@ -92,15 +92,15 @@ int main() {
     fout.open("Lab4.txt");
 
     for (int i = 0; i < index; i++) {
-        fout << courses[index].name << endl;
-        fout << courses[index].year << endl;
-        fout << courses[index].units << endl;
-        fout << courses[index].grade << endl;
+        fout << courses[i].name << endl;
+        fout << courses[i].year << endl;
+        fout << courses[i].units << endl;
+        fout << courses[i].grade << endl;
 
-        cout << courses[index].name << endl;
-        cout << courses[index].year << endl;
-        cout << courses[index].units << endl;
-        cout << courses[index].grade << endl;
+        cout << courses[i].name << endl;
+        cout << courses[i].year << endl;
+        cout << courses[i].units << endl;
+        cout << courses[i].grade << endl;
     }
 
     fout << "EOF" << endl;
