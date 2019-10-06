@@ -107,9 +107,12 @@ void printId(string assignment) {
 }
 
 /**********************************************************************
-* Purpose: 
+* Purpose: Get user input for all courses
 *
-* Parameters: 
+* Parameters: courses[] - all of the courses present so far
+*             size - the size of the courses array
+*             index - the next available (empty) index in the courses array
+*                     this will equal size if the array is full
 *
 * Return: The first unused index of the array
 **********************************************************************/
@@ -149,9 +152,12 @@ int cinAllCourses(Course courses[], int size, int index) {
 }
 
 /**********************************************************************
-* Purpose: 
+* Purpose: Print all courses in a nicely formatted table
 *
-* Parameters: 
+* Parameters: courses[] - all of the courses
+*             size - the size of the courses array
+*             index - the next available (empty) index in the courses
+*                     this will equal size if the array is full
 *
 * Return: Nothing
 **********************************************************************/
@@ -229,4 +235,6 @@ void coutAllCourses(Course courses[], int size, int index) {
 
         cout << endl; //Next line
     }
+
+    cout << endl; //Next line
 }
