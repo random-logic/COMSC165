@@ -23,7 +23,7 @@ struct Expense {
 
 void printId(string assignment);
 int getMenuOption();
-void cinNewExpense(Expense expenses[], int size);
+void cinNewExpense(Expense expenses[], int size, int max_size);
 void coutAllExpenses(Expense expenses[], int size);
 void coutOneExpense(Expense expenses[], int size);
 void coutAmountExpenses (Expense expenses[], int size);
@@ -34,6 +34,8 @@ int main () {
 	const int SIZE = 100;
 	Expense expenses[SIZE];
 
+	int index = 0; //Next available index in the array
+
 	//
 	while (true) {
 		int menu_option = getMenuOption();
@@ -42,10 +44,10 @@ int main () {
 		//
 		switch(menu_option) {
 			case 1:
-				cinNewExpense(expenses, SIZE);
+				coutAllExpenses(expenses, index);
 				break;
 			case 2:
-				coutAllExpenses(expenses, SIZE);
+				cinNewExpense(expenses, index, SIZE);
 				break;
 			case 3:
 				//
@@ -57,8 +59,6 @@ int main () {
 			default:
 				return 0;
 		}
-
-		cout << endl; //Next line
 	}
 }
 
@@ -119,10 +119,15 @@ void cinNewExpense(Expense expenses[], int size, int max_size) {
 	cout << "Please enter the description for the expense: " << endl;
 	getline(cin, expenses[size].name);
 
-	float amount = -1; //
+	float amount; //
+	string *buf = new (string); //
 
-	//
-	while (amount < 0) {}
+	cout << "Please enter the amount of the expense: " << endl;
+	getline(cin, *buf);
+
+	amount = atof((*buf).c_str());
+
+	delete buf;
 }
 
 /**********************************************************************
@@ -138,7 +143,7 @@ void coutAllExpenses (Expense expenses[], int size) {
 	for (int i = 0; i < size; i++) {
 		cout.width(20);
 		cout << "AMOUNT(" << expenses[i].amount << ")";
-		cout << "DESC(" << expenses[i].name << ")";
+		cout << "DESC(" << expenses[i].name << ")" << endl;
 	}
 }
 
