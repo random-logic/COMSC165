@@ -44,10 +44,31 @@ int main () {
 		//
 		switch(menu_option) {
 			case 1:
-				coutAllExpenses(expenses, index);
+				//coutAllExpenses(expenses, index);
+				//Print out all of the contents of the expenses array
+				for (int i = 0; i < index; i++) {
+					cout.width(20);
+					cout << "AMOUNT(" << expenses[i].amount << ")";
+					cout << "DESC(" << expenses[i].name << ")" << endl;
+				}
 				break;
 			case 2:
-				cinNewExpense(expenses, index, SIZE);
+				//cinNewExpense(expenses, index, SIZE);
+					if (index >= SIZE) {
+						cout << "Cannot add more expenses!" << endl;
+					}
+					else {
+						//
+						cout << "Please enter the description for the expense: ";
+						getline(cin, expenses[index].name);
+
+						string buf; //
+
+						cout << "Please enter the amount of the expense: ";
+						getline(cin, buf);
+
+						expenses[index].amount = atof(buf.c_str());
+					}
 				break;
 			case 3:
 				//
@@ -120,14 +141,12 @@ void cinNewExpense(Expense expenses[], int size, int max_size) {
 	getline(cin, expenses[size].name);
 
 	float amount; //
-	string *buf = new (string); //
+	string buf; //
 
 	cout << "Please enter the amount of the expense: " << endl;
-	getline(cin, *buf);
+	getline(cin, buf);
 
-	amount = atof((*buf).c_str());
-
-	delete buf;
+	amount = atof(buf.c_str());
 }
 
 /**********************************************************************
@@ -141,9 +160,10 @@ void cinNewExpense(Expense expenses[], int size, int max_size) {
 void coutAllExpenses (Expense expenses[], int size) {
 	//Print out all of the contents of the expenses array
 	for (int i = 0; i < size; i++) {
-		cout.width(20);
+		cout.setf(ios::left);
 		cout << "AMOUNT(" << expenses[i].amount << ")";
 		cout << "DESC(" << expenses[i].name << ")" << endl;
+		cout.unsetf(ios::left);
 	}
 }
 
@@ -165,9 +185,10 @@ void coutOneExpense(Expense expenses[], int size) {
 	//
 	for (int i = 0; i < size; i++) {
 		if (expenses[i].name == target) {
+			cout.setf(ios::left);
 			cout.width(20);
 			cout << "AMOUNT(" << expenses[i].amount << ")";
-			cout << "DESC(" << expenses[i].name << ")";
+			cout << "DESC(" << expenses[i].name << ")" << endl;
 			return;
 		}
 	}
