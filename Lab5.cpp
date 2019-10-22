@@ -16,6 +16,8 @@ using std::ofstream;
 #include <string>
 using std::string;
 
+#include <cctype>
+
 struct Expense {
 	string name;
 	float amount;
@@ -149,6 +151,11 @@ int cinNewExpense(Expense expenses[], int index, int max_size) {
 * Return: Nothing
 **********************************************************************/
 void coutAllExpenses (Expense expenses[], int size) {
+	if (size == 0) {
+		cout << "No Expenses yet" << endl;
+		return;
+	}
+
 	//Print out all of the contents of the expenses array
 	for (int i = 0; i < size; i++) {
 		cout << "AMOUNT(" << expenses[i].amount << ")   ";
@@ -171,6 +178,8 @@ void coutExpensesByString(Expense expenses[], int size) {
 	cout << "Please enter the search string: ";
 	getline(cin, target);
 
+	bool found = false; //See if any targets have been found
+
 	//For all of the expenses, see if there is a match
 	for (int i = 0; i < size; i++) {
 		int target_pos = 0; //The position of the letter in the target string to be compared to
@@ -178,15 +187,14 @@ void coutExpensesByString(Expense expenses[], int size) {
 		//For each character, see if there is any match within the string
 		for (int j = 0; j < expenses[i].name.size(); j++) {
 			//Do if the target position char != expense position char
-			if (expenses[i].name.at(j) != target.at(target_pos)) {
+			if (tolower(expenses[i].name.at(j)) != tolower(target.at(target_pos))) {
 				target_pos = 0;
 			}
 			//Do if target position has already covered the whole target string
 			else if (target_pos == target.size() - 1){
-				target_pos = 0;
-
 				cout << "AMOUNT(" << expenses[i].amount << ")   ";
 				cout << "DESC(" << expenses[i].name << ")" << endl;
+				found = true;
 
 				break;
 			}
@@ -196,6 +204,9 @@ void coutExpensesByString(Expense expenses[], int size) {
 			}
 		}
 	}
+
+	if (!found)
+		cout << "Not Found" << endl;
 }
 
 /**********************************************************************
@@ -215,6 +226,8 @@ void coutExpensesByAmount (Expense expenses[], int size) {
 	cout << "Please enter the amount (): ";
 	getline(cin, buf);
 
+	bool found = false; //See if any targets have been found
+
 	//Convert string to float
 	target_amount = atof(buf.c_str());
 
@@ -223,6 +236,10 @@ void coutExpensesByAmount (Expense expenses[], int size) {
 		if (expenses[i].amount >= target_amount) {
 			cout << "AMOUNT(" << expenses[i].amount << ")   ";
 			cout << "DESC(" << expenses[i].name << ")" << endl;
+			found = true;
 		}
 	}
+
+	if (!found)
+		cout << "Not Found" << endl;
 }
