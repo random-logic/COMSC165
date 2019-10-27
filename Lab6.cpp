@@ -62,23 +62,85 @@ int main() {
 				getline(cin, input);
 				add_movie.rating = atoi(input.c_str());
 
-				add_movie.next = first_movie;				
+				add_movie.next = first_movie;
 				first_movie = &add_movie;
+
+				cout << first_movie->title;
 				num_of_movies++;
 
 				break;
 			}
-			case 'U': case 'u':
+			case 'U': case 'u': {
+				cout << "Which movie to update(1-" << num_of_movies << ")? ";
+				getline(cin, input);
+				int index = atoi(input.c_str()) - 1;
+
+				Movie * p = first_movie; //The movie to update
+
+				//
+				if (index >= 0 && index < num_of_movies) {
+					//
+					for (int i = 0; i < index; i++) {
+						p = p->next;
+					}
+
+					//Update the movie at p
+					cout << "The current title for movie " << index + 1 << " is " << p->title;
+					cout << "What is the new title for this movie? ";
+					getline(cin, p->title);
+
+					cout << "The current year viewed for movie " << index + 1 << " is " << p->viewed;
+					cout << "What is the new year viewed for this movie? ";
+					getline(cin, input);
+					p->viewed = atoi(input.c_str());
+
+					cout << "The current rating for movie " << index + 1 << " is " << p->rating;
+					cout << "What is the new rating for this movie? ";
+					getline(cin, input);
+					p->rating = atoi(input.c_str());
+				}
+				else
+					cout << "Invalid index" << endl;
+				
 				break;
-			case 'E': case 'e':
+			}
+			case 'E': case 'e': {
+				//Get index to remove
+				cout << "which movie to remove (1-" << num_of_movies << ")? ";
+				getline(cin, input);
+				int index = atoi(input.c_str()) - 1;
+
+				Movie * prev_p; //The previous movie of the movie to remove
+				Movie * p = first_movie; //The movie to remove
+
+				//
+				if (index >= 0 && index < num_of_movies) {
+					//
+					for (int i = 0; i < index; i++) {
+						prev_p = p;
+						p = p->next;
+					}
+
+					//Remove the movie at p
+					prev_p->next = p->next;
+					delete p;
+					num_of_movies--;
+					cout << "Removed movie at index " << index << endl;
+				}
+				else
+					cout << "Invalid index" << endl;
+
 				break;
+			}
 			case 'L': case 'l': {
 				coutTableHeader();
 
 				int movie_count = 0; //
-
+				Movie * p = first_movie; //Pointer to the movie to print out
+				cout << first_movie->title << endl;
+				
 				//
-				for (Movie* p = first_movie; p != NULL; p = p->next) {
+				for (int i = 0; i < num_of_movies; i++) {
 					cout.width(NUM_WIDTH);
 					cout << ++movie_count;
 					cout << " ";
@@ -96,23 +158,80 @@ int main() {
 					cout << " ";
 
 					cout << endl;
+
+					p = p->next;
 				}
 				break;
 			}
-			case 'T': case 't':
+			case 'T': case 't': {
 				break;
-			case 'V': case 'v':
+			}
+			case 'V': case 'v': {
+				//Get how the user wants to sort the movies
+				cout << "Arrange by newest to oldest (Enter N) or oldest to newest (Enter O)? ";
+				getline(cin, input);
+
+				bool swapped = true; //Find out whether the lists has swapped or not
+
+				//
+				/*if (input.at(0) == 'O' || input.at(0) == 'o') {
+					//
+					while (swapped) {
+						swapped = false;
+
+						Movie * p = first_movie;
+						Movie * prev_p;
+
+						//
+						for (int i = 0; i < num_of_movies; i++) {
+							if (p->viewed > p->next->viewed) {
+								swapped = true;
+
+								Movie * temp = p;
+								p->next = p;
+							}
+
+							p = p->next;
+							prev_p = p;
+						}
+					}
+				}
+				else if (input.at(0) == 'N' || input.at(0) == 'n') {
+
+				}
+				else
+					cout << "Invalid input" << endl;*/
+
 				break;
-			case 'R': case 'r':
+			}
+			case 'R': case 'r': {
 				break;
-			case 'Q': case 'q':
+			}
+			case 'Q': case 'q': {
+				//Delete the whole movie list
+				for (int i = 0; i < num_of_movies; i++) {
+					Movie * p = first_movie;
+					first_movie = first_movie->next;
+					delete p;
+				}
+				
 				return 0;
+			}
 			default:
 				cout << "Invalid input, please try again" << endl;
 		}
+
+		cout << endl; //Print empty line
 	}
 }
 
+/**********************************************************************
+* Purpose: Print out the header of the movie table
+*
+* Parameters: None
+*
+* Return: Nothing
+**********************************************************************/
 void coutTableHeader() {
 	cout << "#  Title                         Viewed Rating" << endl;
 	cout << "-- ---------------------------   ------ ------" << endl;
