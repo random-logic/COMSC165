@@ -27,7 +27,7 @@ int main() {
 
 	string input = "";
 
-	Movie * first_movie = NULL;
+	Movie * first_movie = nullptr;
 	int num_of_movies = 0;
 
 	const int NUM_WIDTH = 2;
@@ -50,22 +50,21 @@ int main() {
 		switch (input.at(0))
 		{
 			case 'A': case 'a': {
-				Movie add_movie;
+				Movie * add_movie = new Movie;
 				cout << "Enter a movie's name: ";
-				getline(cin, add_movie.title);
+				getline(cin, add_movie->title);
 				
 				cout << "Enter the year you saw " << "[like 2016]: ";
 				getline(cin, input);
-				add_movie.viewed = atoi(input.c_str());
+				add_movie->viewed = atoi(input.c_str());
 
 				cout << "Enter your rating for " << "[1, 2, 3, 4, 5]: ";
 				getline(cin, input);
-				add_movie.rating = atoi(input.c_str());
+				add_movie->rating = atoi(input.c_str());
 
-				add_movie.next = first_movie;
-				first_movie = &add_movie;
+				add_movie->next = first_movie;
+				first_movie = add_movie;
 
-				cout << first_movie->title;
 				num_of_movies++;
 
 				break;
@@ -137,7 +136,6 @@ int main() {
 
 				int movie_count = 0; //
 				Movie * p = first_movie; //Pointer to the movie to print out
-				cout << first_movie->title << endl;
 				
 				//
 				for (int i = 0; i < num_of_movies; i++) {
