@@ -16,12 +16,12 @@ struct Movie {
 	string title;
 	int viewed;
 	int rating;
-	Movie* next;
+	Movie * next;
 };
 
-void swapMovies(Movie * p, Movie * q);
 void coutAllMovies(Movie * p);
 void printId(string assignment);
+string strToUpper(string str);
 
 int main() {
 	printId("Lab 6");
@@ -145,20 +145,28 @@ int main() {
 				break;
 			}
 			case 'T': case 't': {
-				//CASE INSENSITIVE
+				//NEED TO TEST && CHANGE STD SO ITS HEADER ON THE TOP INSTEAD
 				//Get how the user wants to sort the movies
-				cout << "Arrange by lowest value (A) to highest value (Z) string (Enter \'L\') or oldest to newest (Enter \'O\')? ";
+				cout << "Arrange by lowest value (A) to highest value (Z) string (Enter \'L\') or by highest value (Z) to lowest value (A) (Enter \'H\')? ";
 				getline(cin, input);
 
 				//
-				if (input.at(0) == 'O' || input.at(0) == 'o') {
+				if (input.at(0) == 'L' || input.at(0) == 'l') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
+							if (strToUpper(p->title).compare(strToUpper(q->title)) > 0) {
+								std::swap(p, q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
-				else if (input.at(0) == 'N' || input.at(0) == 'n') {
+				else if (input.at(0) == 'H' || input.at(0) == 'h') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
+							if (strToUpper(p->title).compare(strToUpper(q->title)) < 0) {
+								std::swap(p, q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
 				else
@@ -174,15 +182,19 @@ int main() {
 				if (input.at(0) == 'O' || input.at(0) == 'o') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->viewed > p->viewed)
-								swapMovies(p, q);
+							if (q->viewed > p->viewed) {
+								std::swap(p, q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
 				else if (input.at(0) == 'N' || input.at(0) == 'n') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->viewed < p->viewed)
-								swapMovies(p, q);
+							if (q->viewed < p->viewed) {
+								std::swap(p, q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
 				else
@@ -199,15 +211,19 @@ int main() {
 				if (input.at(0) == 'H' || input.at(0) == 'h') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->rating > p->rating)
-								swapMovies(p, q);
+							if (q->rating > p->rating) {
+								std::swap(*p, *q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
 				else if (input.at(0) == 'L' || input.at(0) == 'l') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->rating < p->rating)
-								swapMovies(p, q);
+							if (q->rating < p->rating) {
+								std::swap(*p, *q);
+								std::swap(p->next, q->next);
+							}
 					coutAllMovies(first_movie);
 				}
 				else
@@ -289,19 +305,14 @@ void printId(string assignment) {
 }
 
 /**********************************************************************
-* Purpose: Swap the movies within the linked list
+* Purpose: Change the case of the contents of the string to upper if possible
 *
-* Parameters: Movie * p - The first movie to swap
-*             Movie * q - The second movie to swap
+* Parameters: string str - The string to convert the case
 *
-* Return: Nothing
+* Return: The new string in upper case
 **********************************************************************/
-void swapMovies (Movie * p, Movie * q) {
-	Movie * temp;
-	temp = p;
-	p = q;
-	q = temp;
-	temp = p->next;
-	p->next = q->next;
-	q->next = temp;
+string strToUpper (string str) {
+	for (int i = 0; i < str.length(); i++)
+		str[i] = toupper(str.at(i));
+	return str;
 }
