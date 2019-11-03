@@ -155,7 +155,7 @@ int main() {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
 							if (strToUpper(p->title).compare(strToUpper(q->title)) > 0) {
-								std::swap(p, q);
+								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
 					coutAllMovies(first_movie);
@@ -164,7 +164,7 @@ int main() {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
 							if (strToUpper(p->title).compare(strToUpper(q->title)) < 0) {
-								std::swap(p, q);
+								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
 					coutAllMovies(first_movie);
@@ -182,8 +182,8 @@ int main() {
 				if (input.at(0) == 'O' || input.at(0) == 'o') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->viewed > p->viewed) {
-								std::swap(p, q);
+							if (q->viewed < p->viewed) {
+								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
 					coutAllMovies(first_movie);
@@ -191,8 +191,8 @@ int main() {
 				else if (input.at(0) == 'N' || input.at(0) == 'n') {
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
 						for (Movie * q = p->next; q != nullptr; q = q->next)
-							if (q->viewed < p->viewed) {
-								std::swap(p, q);
+							if (q->viewed > p->viewed) {
+								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
 					coutAllMovies(first_movie);
