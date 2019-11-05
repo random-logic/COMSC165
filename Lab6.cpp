@@ -33,7 +33,9 @@ int main() {
 
 	cout << endl; //Next line
 
+	//Infinitely loop the program until user wants to quit
 	while (true) {
+		//Display menu
 		cout << "Movie menu:" << endl;
 		cout << "A Add a movie" << endl;
 		cout << "U Update a movie" << endl;
@@ -45,11 +47,19 @@ int main() {
 		cout << "Q Quit" << endl;
 		getline(cin, input);
 
-		//
+		//Prompt invalid input if input length is not 1
+		if (input.length() != 1) {
+			cout << "Invalid input, please try again" << endl << endl;
+			continue;
+		}
+
+		//Take action based on the input character
 		switch (input.at(0))
 		{
-			case 'A': case 'a': {
-				Movie * add_movie = new Movie;
+			case 'A': case 'a': { //Add a movie
+				Movie * add_movie = new Movie; //New movie node
+
+				//Get input
 				cout << "Enter a movie's name: ";
 				getline(cin, add_movie->title);
 				
@@ -61,23 +71,25 @@ int main() {
 				getline(cin, input);
 				add_movie->rating = atoi(input.c_str());
 
-				add_movie->next = first_movie;
-				first_movie = add_movie;
+				add_movie->next = first_movie; //First movie is now the next movie
+				first_movie = add_movie; //This node is now the first movie
 
-				num_of_movies++;
+				num_of_movies++; //Add to the number of movies
 
 				break;
 			}
-			case 'U': case 'u': {
+			case 'U': case 'u': { //Update a movie
+				//Get input
 				cout << "Which movie to update(1-" << num_of_movies << ")? ";
 				getline(cin, input);
-				int index = atoi(input.c_str()) - 1;
 
-				//
+				int index = atoi(input.c_str()) - 1; //Simulated index of the movie to update
+
+				//If index is in range, find the movie
 				if (index >= 0 && index < num_of_movies) {
 					Movie * p = first_movie; //The movie to update
 
-					//
+					//Move the pointer to the right simulated index
 					for (int i = 0; i < index; i++)
 						p = p->next;
 
@@ -101,13 +113,14 @@ int main() {
 				
 				break;
 			}
-			case 'E': case 'e': {
+			case 'E': case 'e': { //Remove a movie
+				//Check to see if there is any movies to delete
 				if (num_of_movies < 1) {
 					cout << "No movies to delete" << endl;
 					break;
 				}
 
-				//Get index to remove
+				//Get simulated index to remove
 				cout << "which movie to remove (1-" << num_of_movies << ")? ";
 				getline(cin, input);
 				int index = atoi(input.c_str()) - 1;
@@ -115,9 +128,9 @@ int main() {
 				Movie * prev_p = nullptr; //The previous movie of the movie to remove
 				Movie * p = first_movie; //The movie to remove
 
-				//
+				//Check to see if index is in range
 				if (index >= 0 && index < num_of_movies) {
-					//
+					//Move the pointers to the right simulated indexes
 					for (int i = 0; i < index; i++) {
 						prev_p = p;
 						p = p->next;
@@ -140,86 +153,106 @@ int main() {
 
 				break;
 			}
-			case 'L': case 'l': {
+			case 'L': case 'l': { //Lists out all movies
 				coutAllMovies(first_movie);
 				break;
 			}
-			case 'T': case 't': {
-				//NEED TO TEST && CHANGE STD SO ITS HEADER ON THE TOP INSTEAD
+			case 'T': case 't': { //Arrange the list by titles
 				//Get how the user wants to sort the movies
 				cout << "Arrange by lowest value (A) to highest value (Z) string (Enter \'L\') or by highest value (Z) to lowest value (A) (Enter \'H\')? ";
 				getline(cin, input);
 
-				//
+				//User wants lowest to highest
 				if (input.at(0) == 'L' || input.at(0) == 'l') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
-						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
+						//For all nodes after the first_movie in the linked list
+						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p title is a higher rank than q title
 							if (strToUpper(p->title).compare(strToUpper(q->title)) > 0) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
-					coutAllMovies(first_movie);
+					coutAllMovies(first_movie); //List all movies
 				}
+				//User wants highest to lowest
 				else if (input.at(0) == 'H' || input.at(0) == 'h') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
-						for (Movie * q = p->next; q != nullptr; q = q->next) //CONTINUE
+						//For all nodes after the first_movie in the linked list
+						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p title is a lower rank than q title
 							if (strToUpper(p->title).compare(strToUpper(q->title)) < 0) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
-					coutAllMovies(first_movie);
+					coutAllMovies(first_movie); //List all movies
 				}
 				else
 					cout << "Invalid input" << endl;
 				break;
 			}
-			case 'V': case 'v': {
+			case 'V': case 'v': { //Arrange the list by viewed
 				//Get how the user wants to sort the movies
 				cout << "Arrange by newest to oldest (Enter \'N\') or oldest to newest (Enter \'O\')? ";
 				getline(cin, input);
 
-				//
+				//User wants oldest to newest
 				if (input.at(0) == 'O' || input.at(0) == 'o') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
+						//For all nodes after the first_movie in the linked list
 						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p viewed is newer than q viewed
 							if (q->viewed < p->viewed) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
-					coutAllMovies(first_movie);
+					coutAllMovies(first_movie); //List all movies
 				}
+				//User wants newest to oldest
 				else if (input.at(0) == 'N' || input.at(0) == 'n') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
+						//For all nodes after the first_movie in the linked list
 						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p viewed is older than q viewed
 							if (q->viewed > p->viewed) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
-					coutAllMovies(first_movie);
+					coutAllMovies(first_movie); //List all movies
 				}
 				else
 					cout << "Invalid input" << endl;
 
 				break;
 			}
-			case 'R': case 'r': {
+			case 'R': case 'r': { //Arrange the list by rating
 				//Get how the user wants to sort the movies
 				cout << "Arrange by highest to lowest (Enter \'H\') or lowest to highest (Enter \'L\')? ";
 				getline(cin, input);
 
-				//
+				//User wants to sort from highest to lowest
 				if (input.at(0) == 'H' || input.at(0) == 'h') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
+						//For all nodes after the first_movie in the linked list
 						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p rating is higher than q rating
 							if (q->rating > p->rating) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
 							}
 					coutAllMovies(first_movie);
 				}
+				//User wants to sort from lowest to highest
 				else if (input.at(0) == 'L' || input.at(0) == 'l') {
+					//For all nodes within the linked list
 					for (Movie * p = first_movie; p != nullptr; p = p->next)
+						//For all nodes after the first_movie in the linked list
 						for (Movie * q = p->next; q != nullptr; q = q->next)
+							//Swap if p rating is higher than q rating
 							if (q->rating < p->rating) {
 								std::swap(*p, *q);
 								std::swap(p->next, q->next);
@@ -231,14 +264,16 @@ int main() {
 
 				break;
 			}
-			case 'Q': case 'q': {
+			case 'Q': case 'q': { //Quit the program
 				//Delete the whole movie list
 				while (first_movie != nullptr) {
 					Movie * p = first_movie;
 					first_movie = first_movie->next;
 					delete p;
 				}
+
 				cout << endl << "Program Finished!" << endl;
+				
 				return 0;
 			}
 			default:
@@ -266,6 +301,7 @@ void coutAllMovies(Movie * p) {
 
 	int movie_count = 0; //The count of the movie
 
+	//Print every node of the list
 	for (p; p != nullptr; p = p->next) {
 		cout.width(NUM_WIDTH);
 		cout << ++movie_count;
@@ -312,7 +348,9 @@ void printId(string assignment) {
 * Return: The new string in upper case
 **********************************************************************/
 string strToUpper (string str) {
+	//Replace every char with upper case if needed
 	for (int i = 0; i < str.length(); i++)
 		str[i] = toupper(str.at(i));
+	
 	return str;
 }
