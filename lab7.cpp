@@ -15,6 +15,10 @@ using std::string;
 #include <utility>
 using std::swap;
 
+#include <fstream> //WRITE AND READ FILES
+using std::ifstream;
+using std::ofstream;
+
 struct Movie {
 	string title;
 	int viewed;
@@ -22,30 +26,33 @@ struct Movie {
 	Movie * next;
 };
 
+void serializeUp(Movie *& first, Movie *& last, string file, int & count);
 void coutMenu();
 void addMovie(Movie *& first, Movie *& last, int & count);
 void updateMovie(Movie * first, int count);
 void removeMovie(Movie *& first, Movie *& last, int & count);
 void coutAllMovies(Movie * first);
-void sortByTitle(Movie *& first, Movie *& last); //USE THIS AND LAB 6 AS TEMPLATE
-void sortByViewed(Movie *& first, Movie *& last); //FINISH THESE FUNCTIONS
-void sortByRating(Movie *& first, Movie *& last); //
+void sortByTitle(Movie *& first, Movie *& last);
+void sortByViewed(Movie *& first, Movie *& last);
+void sortByRating(Movie *& first, Movie *& last);
 string strToUpper(string str);
+void serializeDown(Movie * first, Movie * last, string file, int count);
 void printId(string assignment);
 
 int main() {
 	printId("Lab 6");
 
-	string input = "";
+	string input;
 
 	Movie * first_movie = nullptr;
   Movie * last_movie = nullptr;
 	int num_of_movies = 0;
 
-	cout << endl; //Next line
+  serializeUp(first_movie, last_movie, "movies.txt", num_of_movies);
 
 	//Infinitely loop the program until user wants to quit
 	while (true) {
+    cout << endl; //Print empty line
     coutMenu(); //Display menu
     getline(cin, input); //Get input
 
@@ -60,43 +67,49 @@ int main() {
 		{
 			case 'A': case 'a': //Add a movie
 				addMovie(first_movie, last_movie, num_of_movies);
-				break;
+				continue;
 			case 'U': case 'u': //Update a movie
         updateMovie(first_movie, num_of_movies);
-				break;
+				continue;
 			case 'E': case 'e': //Remove a movie
 				removeMovie(first_movie, last_movie, num_of_movies);
-				break;
+				continue;
 			case 'L': case 'l': //Lists out all movies
 				coutAllMovies(first_movie);
-				break;
+				continue;
 			case 'T': case 't': //Arrange the list by titles
 				sortByTitle(first_movie, last_movie);
-				break;
+				continue;
 			case 'V': case 'v': //Arrange the list by viewed
 				sortByViewed(first_movie, last_movie);
-				break;
+				continue;
 			case 'R': case 'r': //Arrange the list by rating
 				sortByRating(first_movie, last_movie);
+				continue;
+			case 'Q': case 'q': //Break out of switch and while loop
 				break;
-			case 'Q': case 'q': { //Quit the program
-				//Delete the whole movie list
-				while (first_movie != nullptr) {
-					Movie * p = first_movie;
-					first_movie = first_movie->next;
-					delete p;
-				}
-
-				cout << endl << "Program Finished!" << endl;
-				
-				return 0;
-			}
 			default:
 				cout << "Invalid input, please try again" << endl;
+        continue;
 		}
 
-		cout << endl; //Print empty line
+    break;
 	}
+
+  serializeDown(first_movie, last_movie, "movies.txt", num_of_movies);
+
+  //Delete the whole movie list
+  while (first_movie != nullptr) {
+    Movie * p = first_movie;
+    first_movie = first_movie->next;
+    delete p;
+  }
+  last_movie = nullptr;
+  num_of_movies = 0;
+
+  //Quit the program
+  cout << endl << "Program Finished!" << endl;
+  return 0;
 }
 
 /**********************************************************************
@@ -161,6 +174,12 @@ void addMovie(Movie *& first, Movie *& last, int & count) {
 * Return: Nothing
 **********************************************************************/
 void updateMovie(Movie * first, int count) {
+  //Stop if there is no movies to update
+  if (count < 1) {
+    cout << "No movies to update" << endl;
+    break;
+  }
+
   //Get input
   string input;
   cout << "Which movie to update(1-" << count << ")? ";
@@ -456,8 +475,10 @@ void sortByRating(Movie *& first, Movie *& last) {
         break;
       }
     }
-  }
     coutAllMovies(first); //List all movies
+  }
+  else
+    cout << "Invalid Input" << endl;
 }
 
 /**********************************************************************
@@ -490,4 +511,31 @@ string strToUpper (string str) {
 		str[i] = toupper(str.at(i));
 	
 	return str;
+}
+
+//CONTINUE
+/**********************************************************************
+* Purpose: Serialize up the movies to the queue
+*
+* Parameters: Movie *& first - The pointer to the first movie
+*             Movie *& last - The pointer to the last movie
+*             string file - The file name
+*             int & count - The number of movies
+*
+* Return: Nothing
+**********************************************************************/
+void serializeUp(Movie *& first, Movie *& last, string file, int & count) {
+}
+
+/**********************************************************************
+* Purpose: Serialize down the movies from the queue
+*
+* Parameters: Movie * first - The pointer to the first movie
+*             Movie * last - The pointer to the last movie
+*             string file - The file name
+*             int count - The number of movies
+*
+* Return: Nothing
+**********************************************************************/
+void serializeDown(Movie * first, Movie * last, string file, int count) {
 }
