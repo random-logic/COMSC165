@@ -456,6 +456,7 @@ void sortByRating(Movie *& first, Movie *& last) {
         break;
       }
     }
+  }
     coutAllMovies(first); //List all movies
 }
 
