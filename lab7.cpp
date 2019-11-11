@@ -350,7 +350,114 @@ void sortByTitle(Movie *& first, Movie *& last) {
     cout << "Invalid input" << endl;
 }
 
+/**********************************************************************
+* Purpose: Sort the queue by viewed
+*
+* Parameters: Movie *& first - The pointer to the first movie
+*             Movie *& last - The pointer to the last movie
+*
+* Return: Nothing
+**********************************************************************/
+void sortByViewed(Movie *& first, Movie *& last) {
+  //Get how the user wants to sort the movies
+  string input;
+  cout << "Arrange by newest to oldest (Enter \'N\') or oldest to newest (Enter \'O\')? ";
+  getline(cin, input);
 
+  //User wants oldest to newest
+  if (input.at(0) == 'O' || input.at(0) == 'o') {
+    //For all nodes within the linked list
+    for (Movie * p = first; true; p = p->next) {
+      //For all nodes after the first_movie in the linked list
+      for (Movie * q = p->next; q != nullptr; q = q->next)
+        //Swap if p viewed is newer than q viewed
+        if (q->viewed < p->viewed) {
+          swap(*p, *q);
+          swap(p->next, q->next);
+        }
+      
+      if (p->next == nullptr) {
+        last = p;
+        break;
+      }
+    }
+    coutAllMovies(first); //List all movies
+  }
+  //User wants newest to oldest
+  else if (input.at(0) == 'N' || input.at(0) == 'n') {
+    //For all nodes within the linked list
+    for (Movie * p = first; true; p = p->next) {
+      //For all nodes after the first_movie in the linked list
+      for (Movie * q = p->next; q != nullptr; q = q->next)
+        //Swap if p viewed is newer than q viewed
+        if (q->viewed > p->viewed) {
+          swap(*p, *q);
+          swap(p->next, q->next);
+        }
+      
+      if (p->next == nullptr) {
+        last = p;
+        break;
+      }
+    }
+    coutAllMovies(first); //List all movies
+  }
+  else
+    cout << "Invalid input" << endl;
+}
+
+/**********************************************************************
+* Purpose: Sort the queue by rating
+*
+* Parameters: Movie *& first - The pointer to the first movie
+*             Movie *& last - The pointer to the last movie
+*
+* Return: Nothing
+**********************************************************************/
+void sortByRating(Movie *& first, Movie *& last) {
+  //Get how the user wants to sort the movies
+  string input;
+  cout << "Arrange by highest to lowest (Enter \'H\') or lowest to highest (Enter \'L\')? ";
+  getline(cin, input);
+
+  //User wants to sort from highest to lowest
+  if (input.at(0) == 'H' || input.at(0) == 'h') {
+    //For all nodes within the linked list
+    for (Movie * p = first; true; p = p->next) {
+      //For all nodes after the first_movie in the linked list
+      for (Movie * q = p->next; q != nullptr; q = q->next)
+        //Swap if p rating is higher than q rating
+        if (q->rating > p->rating) {
+          swap(*p, *q);
+          swap(p->next, q->next);
+        }
+      
+      if (p->next == nullptr) {
+        last = p;
+        break;
+      }
+    }
+    coutAllMovies(first); //List all movies
+  }
+  //User wants to sort from lowest to highest
+  else if (input.at(0) == 'L' || input.at(0) == 'l') {
+    //For all nodes within the linked list
+    for (Movie * p = first; true; p = p->next) {
+      //For all nodes after the first_movie in the linked list
+      for (Movie * q = p->next; q != nullptr; q = q->next)
+        //Swap if p rating is higher than q rating
+        if (q->rating < p->rating) {
+          swap(*p, *q);
+          swap(p->next, q->next);
+        }
+      
+      if (p->next == nullptr) {
+        last = p;
+        break;
+      }
+    }
+    coutAllMovies(first); //List all movies
+}
 
 /**********************************************************************
 * Purpose: Print who typed up this program and the assignment name in the console
