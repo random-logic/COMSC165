@@ -15,7 +15,7 @@ using std::string;
 #include <utility>
 using std::swap;
 
-#include <fstream> //WRITE AND READ FILES
+#include <fstream>
 using std::ifstream;
 using std::ofstream;
 
@@ -36,11 +36,11 @@ void sortByTitle(Movie *& first, Movie *& last);
 void sortByViewed(Movie *& first, Movie *& last);
 void sortByRating(Movie *& first, Movie *& last);
 string strToUpper(string str);
-void serializeDown(Movie * first, Movie * last, string file, int count);
+void serializeDown(Movie * first, string file);
 void printId(string assignment);
 
 int main() {
-	printId("Lab 6");
+	printId("Lab 7");
 
 	string input;
 
@@ -96,7 +96,7 @@ int main() {
     break;
 	}
 
-  serializeDown(first_movie, last_movie, "movies.txt", num_of_movies);
+  serializeDown(first_movie, "movies.txt");
 
   //Delete the whole movie list
   while (first_movie != nullptr) {
@@ -141,12 +141,18 @@ void coutMenu() {
 * Return: Nothing
 **********************************************************************/
 void addMovie(Movie *& first, Movie *& last, int & count) {
-  Movie * add_movie = new Movie; //New movie node
-
   //Get input
   string input;
   cout << "Enter a movie's name: ";
-  getline(cin, add_movie->title);
+  getline(cin, input);
+
+  if (input == "") {
+    cout << "No movie exists without a name" << endl;
+    return;
+  }
+
+  Movie * add_movie = new Movie; //New movie node
+  add_movie->title = input;
   
   cout << "Enter the year you saw " << "[like 2016]: ";
   getline(cin, input);
@@ -158,8 +164,11 @@ void addMovie(Movie *& first, Movie *& last, int & count) {
 
   // link to the end of the list
   add_movie->next = nullptr;
-  if (last != nullptr) last->next = add_movie;
-  else first = add_movie;
+  if (last != nullptr) //Make last next the movie to add if it exists
+    last->next = add_movie;
+  else  //Otherwise there is no movies yet and it is the first movie
+    first = add_movie;
+  
   last = add_movie;
 
   count++; //Add to the number of movies
@@ -177,7 +186,7 @@ void updateMovie(Movie * first, int count) {
   //Stop if there is no movies to update
   if (count < 1) {
     cout << "No movies to update" << endl;
-    break;
+    return;
   }
 
   //Get input
@@ -513,7 +522,6 @@ string strToUpper (string str) {
 	return str;
 }
 
-//CONTINUE
 /**********************************************************************
 * Purpose: Serialize up the movies to the queue
 *
@@ -525,17 +533,69 @@ string strToUpper (string str) {
 * Return: Nothing
 **********************************************************************/
 void serializeUp(Movie *& first, Movie *& last, string file, int & count) {
+  //Open the file to write
+  ifstream fin;
+  fin.open(file);
+  
+  //Do only if the file exists
+  if (fin.good()) {
+    //Do until the end of file is reached
+    while (!fin.eof()) {
+      //Get input
+      string input;
+      getline(fin, input);
+
+      if (input == "")
+        break;
+      
+      Movie * add_movie = new Movie; //New movie node
+      add_movie->title = input;
+      
+      getline(fin, input);
+      add_movie->viewed = atoi(input.c_str());
+
+      getline(fin, input);
+      add_movie->rating = atoi(input.c_str());
+
+      // link to the end of the list
+      add_movie->next = nullptr;
+      if (last != nullptr) //Make last next the movie to add if it exists
+        last->next = add_movie;
+      else  //Otherwise there is no movies yet and it is the first movie
+        first = add_movie;
+      
+      last = add_movie; //The new movie added should be the last one
+
+      count++; //Add to the number of movies
+    }
+  }
+
+  fin.close(); //Close this file
 }
 
 /**********************************************************************
 * Purpose: Serialize down the movies from the queue
 *
 * Parameters: Movie * first - The pointer to the first movie
-*             Movie * last - The pointer to the last movie
 *             string file - The file name
-*             int count - The number of movies
 *
 * Return: Nothing
 **********************************************************************/
-void serializeDown(Movie * first, Movie * last, string file, int count) {
+void serializeDown(Movie * first, string file) {
+  //Open the file to write
+  ofstream fout;
+  fout.open(file);
+
+  if (fout.good()) {
+    while (first != nullptr) {
+      //Write movie to file
+      fout << first->title << endl;
+      fout << first->viewed << endl;
+      fout << first->rating << endl;
+
+      first = first->next; //Next movie
+    }
+  }
+
+  fout.close(); //Close file
 }
