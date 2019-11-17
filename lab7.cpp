@@ -258,16 +258,20 @@ void removeMovie(Movie *& first, Movie *& last, int & count) {
     
     //Link next movie of p to first movie
     if (prev_p == nullptr) {
+      //If first is the same as last, nothing left in list
       if (first == last) {
         first = nullptr;
         last = nullptr;
       }
+      //There are more movies after first
       else
         first = p->next;
     }
     //Link next movie of p to next movie of previous movie
     else {
       prev_p->next = p->next;
+
+      //Move last pointer to the previous movie if p is the last movie
       if (p == last)
         last = prev_p;
     }
