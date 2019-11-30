@@ -1,0 +1,7 @@
+Is the answer to the test question a or b (y/n)? 
+Is the answer to the test question a (y/n)? 
+The answer is a
+The answer is b
+Is the answer to the test question c (y/n)? 
+The answer is c
+The answer is d
